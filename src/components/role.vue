@@ -103,7 +103,6 @@
                                                 li.push(res3.data.data[i].rulesId)
                                             }
                                             this.checkboxRules = li;
-                                            console.log(li)
                                         }).catch(error3 => {
                                             this.$message(error3.data.message)
                                         })

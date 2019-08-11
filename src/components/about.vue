@@ -10,16 +10,23 @@
 </template>
 
 <script>
+  var url = "http://106.13.207.98:8080/jurisdiction";
     export default {
         name: "about",
         data(){
             return{
-                title:"/about"
+                title:"/about",
             }
         },
         props: {
             url: String,
         },
+      created(){
+      },
+      methods: {
+          init(){
+          }
+      }
     }
 </script>
 

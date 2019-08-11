@@ -48,7 +48,6 @@
                     this.$axios
                         .post(url + "/user/login", params)
                         .then(res => {
-                            //console.log(res)
                             let result = res.data;
                             if (result.status == 200) {
                                 this.$store.dispatch("login", result.data.userId)

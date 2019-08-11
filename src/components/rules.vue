@@ -130,7 +130,6 @@
                     .then(res=>{
                         if(res.data.status==200){
                             this.ruleslist = res.data.data
-                            console.log(this.ruleslist)
                         }
                     }).catch(error=>{
                         this.$message("异常")

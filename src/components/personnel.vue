@@ -193,7 +193,6 @@
             },
             handleClick(row) {
                 this.user = row
-                console.log(row)
                 this.$axios.get(url + "/role/findall")
                     .then(res => {
                         if (res.data.status == 200) {
@@ -232,7 +231,6 @@
             },
 
             submit_role() {
-                console.log(this.user.userId)
                 this.$axios.get(url + "/role/delall", {
                     params: {
                         userId: this.user.userId

@@ -34,7 +34,7 @@
     #index{
         margin: 0;
         padding: 0;
-        width: 1920px;
-        height: 969px;
+        width: 100%;
+        height: 100%;
     }
 </style>

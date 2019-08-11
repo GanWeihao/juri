@@ -49,15 +49,12 @@
                         userId: this.userId
                     }
                 }).then(res2 => {
-                    console.log("caidan",res2)
                     if (res2.data.status == 200) {
                         this.caianList = res2.data.data;
                     }
                 }).catch(error2 => {
                     this.$message('查询菜单异常');
                 })
-
-                // console.log(this.caianList)
                 this.$axios.get(url + "/user/rules",{
                     params:{
                         userId: this.userId
