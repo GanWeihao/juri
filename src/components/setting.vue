@@ -3,7 +3,7 @@
         <div class="setting-table">
             <el-card class="box-card">
                 <div v-if="title==''">
-                    <h1>欢迎来到蓝桥权限管理系统！</h1>
+                    <h1>欢迎来到权限管理系统！</h1>
                 </div>
                 <div>
                     <about v-bind:url="title"></about>
@@ -35,8 +35,8 @@
     import personnel from "@/components/personnel";
     import role from "@/components/role";
     import rules from "@/components/rules"
-
-    var url = "http://106.13.207.98:8080/jurisdiction"
+    var url = "http://localhost:8080"
+    // var url = "http://106.13.207.98:8080/jurisdiction"
     export default {
         name: "setting",
         components:{

@@ -3,8 +3,8 @@
         <el-button size="medium" @click="addrules()">添加权限</el-button>
         <el-table
                 size="medium"
-                :data="ruleslist,index"
-                :key="index"
+                :data="ruleslist"
+                key="rulesId"
                 style="margin-top:10px;width: 100%;height: 869px">
             <el-table-column
                     fixed="left"
@@ -92,7 +92,9 @@
 </template>
 
 <script>
-    var url = "http://106.13.207.98:8080/jurisdiction"
+  var url = "http://localhost:8080"
+
+  // var url = "http://106.13.207.98:8080/jurisdiction"
     export default {
         name: "rules",
         props: {

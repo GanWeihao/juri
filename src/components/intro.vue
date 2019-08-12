@@ -16,13 +16,7 @@
             return{
                 title:"/intro"
             }
-        },
-      created:{
-
-      },
-      methods(){
-
-      }
+        }
     }
 </script>
 

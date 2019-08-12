@@ -17,29 +17,33 @@
 </template>
 
 <script>
-    var url = "http://106.13.207.98:8080/jurisdiction";
+  var url = "http://localhost:8080";
+
+  // var url = "http://106.13.207.98:8080/jurisdiction";
     export default {
         name: 'Home',
         data() {
             return {
                 labelPosition: 'top',
                 formLabelAlign: {
-                    userName: '',
-                    userPassword: ''
+                    userName: "",
+                    userPassword: ""
                 }
             };
         },
         methods: {
             submitForm() {
-                if (this.formLabelAlign.username == '') {
+              if (this.formLabelAlign.userName == "" || this.formLabelAlign.userName == null) {
                     this.$alert('手机号/邮箱不能空着哦！', '注意！', {
                         confirmButtonText: '确定',
                     });
-                } else if (this.formLabelAlign.password == '') {
+                } else if (this.formLabelAlign.userPassword == ""  || this.formLabelAlign.userPassword == null) {
                     this.$alert('密码不能空着哦！', '注意！', {
                         confirmButtonText: '确定',
                     });
                 } else {
+                console.log(this.formLabelAlign.userName)
+                console.log(this.formLabelAlign.userPassword)
                     let params = this.$qs.stringify({
                         userTelphone: this.formLabelAlign.userName,
                         userEmail: this.formLabelAlign.userName,

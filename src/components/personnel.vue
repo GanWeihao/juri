@@ -1,10 +1,16 @@
 <template>
     <div id="personnel" v-if="url==title">
         <el-button size="medium" @click="adduser()">添加用户</el-button>
-        <el-table
+        <el-button size="medium" @click="deluser()">删除选中</el-button>
+      <el-table
+                @selection-change="handleSelectionChange"
                 size="medium"
                 :data="tableData"
                 style="margin-top:10px;width: 100%;height: 869px">
+          <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
             <el-table-column
                     fixed="left"
                     type="index"
@@ -114,7 +120,9 @@
 </template>
 
 <script>
-    var url = "http://106.13.207.98:8080/jurisdiction";
+  var url = "http://localhost:8080"
+
+  // var url = "http://106.13.207.98:8080/jurisdiction";
     export default {
         name: "personnel",
         data() {
@@ -139,7 +147,8 @@
                     userTelphone:'',
                     userEmail:''
                 },
-                formLabelWidth:"120px"
+                formLabelWidth:"120px",
+              multipleSelection: []
             };
         },
         props: {
@@ -355,7 +364,16 @@
                         message: '已取消删除'
                     });
                 });
+            },
+          handleSelectionChange(val){
+            // this.multipleSelection = val;
+            console.log(val)
+            var list = []
+            for(var i=0;i<val.length;i++){
+              list.push(val[i]).userId
             }
+            console.log(list)
+          }
         }
     }
 </script>
