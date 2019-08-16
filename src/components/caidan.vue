@@ -1,5 +1,9 @@
 <template>
     <div id="menu_list">
+      <div class="title">
+        <img src="../../static/image/index.png"/>
+        <p>权限管理系统</p>
+      </div>
         <el-menu
                 class="el-menu-vertical-demo"
                 background-color="#545c64"
@@ -39,8 +43,13 @@
                 index: 0
             };
         },
+      created(){
+        this.init()
+      },
         mounted: function () {
-            this.init();
+          this.$bus.$on('updataRules', ()=> {
+            this.init()
+          })
         },
         props:["message"],
         methods: {
@@ -77,6 +86,23 @@
 </script>
 
 <style>
+  .title{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    line-height: 60px;
+    height: 60px;
+  }
+  .title img{
+    margin-right: 10px;
+    height: 40px;
+  }
+  .title p{
+    font-family: 幼圆;
+    font-size: 20px;
+    color: springgreen;
+  }
     #menu_list{
         float: left;
         width: 11%;

@@ -33,9 +33,14 @@
         props: {
             url: String,
         },
-        mounted() {
-            this.init();
-        },
+      created(){
+        this.init()
+      },
+      mounted(){
+        this.$bus.$on('headChange', ()=> {
+          this.init()
+        })
+      },
         methods: {
             init() {
                 this.userId = this.$store.state.loginUserId;

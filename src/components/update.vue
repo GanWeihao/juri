@@ -58,14 +58,20 @@
                     type: ''
                 },
                 userId: '',
-                userMsg: {}
+                userMsg: {},
             };
         },
+      inject:['reload'],
         props: {
             url: String,
         },
+      created(){
+        this.init();
+      },
         mounted() {
-            this.init();
+          this.$bus.$on('change', ()=> {
+            this.init()
+          })
         },
         methods: {
             init() {
@@ -84,6 +90,7 @@
                     this.$message('查询个人信息异常');
                 })
             },
+
 
             email_btn() {
                 if (this.userMsg.userEmail == "" || this.userMsg.userEmail == null) {
@@ -261,6 +268,8 @@
                 })
             },
 
+
+
             uploadHttp(file) {
                 var fd = new FormData();
                 fd.append("userHeadimg", file.file);
@@ -284,6 +293,7 @@
                                             type: "success",
                                             message: "更换成功!"
                                         });
+                                        this.$bus.$emit('headChange')
                                         this.init();
                                     }
                                 }).catch(res2 => {
@@ -313,6 +323,8 @@
                     }
                 }).then(res => {
                     if (res.data.status == 200) {
+                      this.$bus.$emit('headChange');
+                      this.$bus.$emit('addRole');
                         this.$message({
                             type: "success",
                             message: "修改成功！"

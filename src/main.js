@@ -10,11 +10,13 @@ import axios from 'axios';
 import qs from 'qs';
 import store from './store';
 
+
 Vue.use(Vuex)
 Vue.use(ElementUI, {size: 'small', zIndex: 3000});
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
 Vue.config.productionTip = false
+Vue.prototype.$bus = new Vue();
 
 /* eslint-disable no-new */
 new Vue({

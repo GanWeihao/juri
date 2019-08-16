@@ -6,7 +6,7 @@
       @selection-change="handleSelectionChange"
       size="medium"
       :data="tableData"
-      style="margin-top:10px;width: 100%;height: 869px">
+      style="margin-top:10px;width: 100%;">
       <el-table-column
         type="selection"
         width="55">
@@ -49,17 +49,28 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pageNum"
+      :page-sizes="[6, 8, 10, 12]"
+      :page-size="pageSize"
+      :hide-on-single-page="singlePage"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
+
     <el-dialog
       :before-close="handleClose"
       destroy-on-close
       title="查看角色"
-      :visible.sync="dialogVisible"
-      width="30%">
+      :visible.sync="dialogVisible">
       <el-checkbox-group
         v-model="checkboxRoles"
-        :min="1"
+        :min="0"
         :max="roleOptions.length">
-        <el-checkbox v-for="role in roleOptions" :label="role.ROLE_ID" :key="role.ROLE_ID">{{role.ROLE_NAME}}
+        <el-checkbox v-for="role in roleOptions" :label="role.ROLE_ID" :key="role.ROLE_ID">
+          {{role.ROLE_NAME}}
         </el-checkbox>
       </el-checkbox-group>
       <span slot="footer" class="dialog-footer">
@@ -116,6 +127,7 @@
         <el-button type="primary" @click="submit_updateuser()">确 定</el-button>
       </div>
     </el-dialog>
+
   </div>
 </template>
 
@@ -149,25 +161,75 @@
         },
         formLabelWidth: "120px",
         multipleSelection: [],
-        ids: []
+        ids: [],
+
+        currentPage4: 4,
+        singlePage: true,
+        pageSize: 8,
+        pageNum: 1,
+        total: ''
       };
     },
     props: {
       url: String,
     },
-    mounted: function () {
+    created() {
       this.init();
+    },
+    mounted: function () {
+      this.$bus.$on('addRole', () => {
+        this.init()
+      })
     },
     methods: {
       init() {
         this.$axios.get(url + "/user/findall")
           .then(res => {
             if (res.data.status == 200) {
-              for (let i = 0; i < res.data.data.length; i++) {
-                var date = new Date(res.data.data[i].userTime);
-                res.data.data[i].userTime = date.toLocaleString();
+              this.total = res.data.total
+              for (let i = 0; i < res.data.data.list.length; i++) {
+                var date = new Date(res.data.data.list[i].userTime);
+                res.data.data.list[i].userTime = date.toLocaleString();
               }
-              this.tableData = res.data.data;
+              this.tableData = res.data.data.list;
+            }
+          })
+      },
+      handleSizeChange(val) {
+        this.pageSize = val
+        this.$axios.get(url + "/user/findall", {
+          params: {
+            pageSize: this.pageSize,
+            pageNum: this.pageNum
+          }
+        })
+          .then(res => {
+            if (res.data.status == 200) {
+              this.total = res.data.total
+              for (let i = 0; i < res.data.data.list.length; i++) {
+                var date = new Date(res.data.data.list[i].userTime);
+                res.data.data.list[i].userTime = date.toLocaleString();
+              }
+              this.tableData = res.data.data.list;
+            }
+          })
+      },
+      handleCurrentChange(val) {
+        this.pageNum = val
+        this.$axios.get(url + "/user/findall", {
+          params: {
+            pageSize: this.pageSize,
+            pageNum: this.pageNum
+          }
+        })
+          .then(res => {
+            if (res.data.status == 200) {
+              this.total = res.data.total
+              for (let i = 0; i < res.data.data.list.length; i++) {
+                var date = new Date(res.data.data.list[i].userTime);
+                res.data.data.list[i].userTime = date.toLocaleString();
+              }
+              this.tableData = res.data.data.list;
             }
           })
       },
@@ -196,6 +258,7 @@
         this.handleClose2();
       },
       submit_roleclose() {
+        this.$bus.$emit('updataRules')
         this.handleClose()
       },
       submit_insertuser_close() {
@@ -289,7 +352,7 @@
                           userTelphone: '',
                           userEmail: ''
                         }
-                        if(i=this.checkboxRoles.length-1){
+                        if (i = this.checkboxRoles.length - 1) {
                           this.checkboxRoles = []
                         }
                         this.dialogFormVisible = false
@@ -316,6 +379,8 @@
           }
         }).then(res => {
           if (res.data.status == 200) {
+            this.$bus.$emit('headChange')
+            this.$bus.$emit('change')
             this.init();
             this.handleClose2();
             this.$message({
@@ -377,36 +442,34 @@
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
-        console.log(val)
         var list = []
         for (var i = 0; i < val.length; i++) {
           list.push(val[i].userId);
         }
         this.ids = list;
       },
-      deluser(){
-        console.log(this.ids)
+      deluser() {
         this.$confirm('此操作将永久删除选中用户, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(()=>{
-          this.$axios.get(url+'/user/deleteoptions',{
+        }).then(() => {
+          this.$axios.get(url + '/user/deleteoptions', {
             params: {
-              user:JSON.stringify(this.ids)
+              user: JSON.stringify(this.ids)
             }
           })
-            .then(res=>{
-            if(res.data.status==200){
-              this.init();
-              this.$message("删除成功")
-            }else{
-              this.$message("删除失败")
-            }
-          }).catch(res=>{
+            .then(res => {
+              if (res.data.status == 200) {
+                this.init();
+                this.$message("删除成功")
+              } else {
+                this.$message("删除失败")
+              }
+            }).catch(res => {
             this.$message("删除异常")
           })
-        }).catch(()=>{
+        }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'

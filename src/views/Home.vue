@@ -42,8 +42,6 @@
                         confirmButtonText: '确定',
                     });
                 } else {
-                console.log(this.formLabelAlign.userName)
-                console.log(this.formLabelAlign.userPassword)
                     let params = this.$qs.stringify({
                         userTelphone: this.formLabelAlign.userName,
                         userEmail: this.formLabelAlign.userName,

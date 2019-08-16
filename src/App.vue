@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-if="isRouterAlive"></router-view>
   </div>
 
 </template>
@@ -10,6 +10,16 @@
     name: 'App',
     components: {
 
+    },
+    provide(){
+      return{
+        reload: this.reload
+      }
+    },
+    data(){
+      return{
+        isRouterAlive: true
+      }
     },
     created(){
       window.addEventListener("beforeunload",()=>{
@@ -23,6 +33,14 @@
        */
       const { NODE_ENV } = process.env;
       document.documentElement.className = NODE_ENV;
+    },
+    methods:{
+      reload(){
+        this.isRouterAlive = false;
+        this.$nextTick(function () {
+          this.isRouterAlive = true
+        })
+      },
     }
   }
 </script>

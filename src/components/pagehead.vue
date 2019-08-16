@@ -1,9 +1,10 @@
 <template>
   <div id="pagehead">
     <div class="pagehead-welcome">
-      <a class="welcome"> 权限管理系统</a>
+      <a class="welcome">欢迎</a>
     </div>
     <div class="pagehead-bg">
+      <img :src="'http://106.13.207.98:8080/jurisdiction/img/'+user.userHeadimg"/>
       <a class="username">
         {{user.userName}}
       </a>
@@ -33,7 +34,13 @@ export default {
   created(){
     this.init()
   },
+  mounted(){
+    this.$bus.$on('headChange', ()=> {
+      this.init()
+    })
+  },
   methods: {
+
     init(){
       this.userId = this.$store.state.loginUserId;
       this.userId = this.$store.state.loginUserId;
@@ -61,37 +68,49 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
   #pagehead{
+    display: flex;
+    flex-direction: row;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 80px;
+    width: 89%;
+    height: 60px;
     background-color: #545c64;
   }
-  .pagehead-welcome{
-    float: left;
-    margin: auto;
-  }
+
   .welcome{
     text-decoration: none;
-    line-height: 80px;
+    line-height: 60px;
     color: #fbffff;
-    font-size: 20px;
+    font-size: 35px;
     margin-right: 10px;
   }
+  .pagehead-welcome{
+    width: 200px;
+    margin: auto;
+  }
     .pagehead-bg{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
       float: right;
       margin: 0;
     }
+    .pagehead-bg img{
+      margin-right: 10px;
+      height: 50px;
+      border-radius: 50%;
+    }
     .username{
       text-decoration: none;
-      line-height: 80px;
-      color: #409eff;
+      line-height: 60px;
+      color: cyan;
       font-size: 20px;
       margin-right: 10px;
     }
   .login_out{
     text-decoration: none;
-    line-height: 80px;
+    line-height: 60px;
     margin-right: 50px;
     font-size: 20px;
     color: white;

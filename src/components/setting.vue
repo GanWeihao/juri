@@ -83,7 +83,7 @@
         float: left;
         margin: 0;
         width: 89%;
-        height: 889px;
+        height: 909px;
         background-color: rgba(0,0,0,0.1);
     }
     .box-card{
