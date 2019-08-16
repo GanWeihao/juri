@@ -35,8 +35,8 @@
     import personnel from "@/components/personnel";
     import role from "@/components/role";
     import rules from "@/components/rules"
-    var url = "http://localhost:8080"
-    // var url = "http://106.13.207.98:8080/jurisdiction"
+    // var url = "http://localhost:8080"
+    var url = "http://106.13.207.98:8080/jurisdiction"
     export default {
         name: "setting",
         components:{

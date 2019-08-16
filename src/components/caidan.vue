@@ -26,9 +26,9 @@
 </template>
 
 <script>
-  var url = "http://localhost:8080"
+  // var url = "http://localhost:8080"
 
-  // var url = "http://106.13.207.98:8080/jurisdiction";
+  var url = "http://106.13.207.98:8080/jurisdiction";
     export default {
         name: 'caidan',
         data() {
