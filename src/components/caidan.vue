@@ -100,7 +100,7 @@
   }
   .title p{
     font-family: 幼圆;
-    font-size: 20px;
+    font-size: 18px;
     color: springgreen;
   }
     #menu_list{

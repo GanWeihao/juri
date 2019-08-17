@@ -10,7 +10,6 @@ import axios from 'axios';
 import qs from 'qs';
 import store from './store';
 
-
 Vue.use(Vuex)
 Vue.use(ElementUI, {size: 'small', zIndex: 3000});
 Vue.prototype.$axios = axios

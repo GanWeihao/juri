@@ -6,11 +6,11 @@
     <el-button size="medium" @click="delRole()">
       删除角色
     </el-button>
-    <div class="f5">
-      <el-button size="medium" @click="openFullScreen">
-        刷新
-      </el-button>
-    </div>
+    <!--<div class="f5">-->
+      <!--<el-button size="medium" @click="openFullScreen">-->
+        <!--刷新-->
+      <!--</el-button>-->
+    <!--</div>-->
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="(role,index) in rolelist" :key="index" :label="role.ROLE_NAME" :name="role.ROLE_ID">
         <el-checkbox-group
@@ -122,18 +122,18 @@
           this.$message(error.data.message)
         })
       },
-      openFullScreen() {
-        const loading = this.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        setTimeout(() => {
-          this.init();
-          loading.close();
-        }, 1000);
-      },
+      // openFullScreen() {
+      //   const loading = this.$loading({
+      //     lock: true,
+      //     text: 'Loading',
+      //     spinner: 'el-icon-loading',
+      //     background: 'rgba(0, 0, 0, 0.7)'
+      //   });
+      //   setTimeout(() => {
+      //     this.init();
+      //     loading.close();
+      //   }, 1000);
+      // },
       handleClick(tab, event) {
         this.roleId = tab.name
         this.$axios.get(url + "/rules/select", {
@@ -268,7 +268,4 @@
 </script>
 
 <style>
-  .f5 {
-    float: right;
-  }
 </style>
