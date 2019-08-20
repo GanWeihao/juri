@@ -52,11 +52,10 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="pageNum"
-      :page-sizes="[6, 8, 10, 12]"
+      :current-page.sync="pageNum"
+      :page-sizes="[6,8,10]"
       :page-size="pageSize"
-      :hide-on-single-page="singlePage"
-      layout="total, sizes, prev, pager, next, jumper"
+      layout="total, sizes, prev, pager, next"
       :total="total">
     </el-pagination>
 
@@ -164,16 +163,16 @@
         ids: [],
 
         currentPage4: 4,
-        singlePage: true,
+        singlePage: false,
         pageSize: 8,
         pageNum: 1,
-        total: ''
+        total: 0
       };
     },
     props: {
       url: String,
     },
-    created() {
+    created: function() {
       this.init();
     },
     mounted: function () {
@@ -185,6 +184,7 @@
       init() {
         this.$axios.get(url + "/user/findall")
           .then(res => {
+            console.log(res)
             if (res.data.status == 200) {
               this.total = res.data.total
               for (let i = 0; i < res.data.data.list.length; i++) {
@@ -192,6 +192,9 @@
                 res.data.data.list[i].userTime = date.toLocaleString();
               }
               this.tableData = res.data.data.list;
+              this.pageNum = res.data.data.pageNum;
+              this.pageSize = res.data.data.pageSize;
+              this.total = res.data.data.total;
             }
           })
       },
@@ -211,6 +214,9 @@
                 res.data.data.list[i].userTime = date.toLocaleString();
               }
               this.tableData = res.data.data.list;
+              this.pageNum = res.data.data.pageNum;
+              this.pageSize = res.data.data.pageSize;
+              this.total = res.data.data.total;
             }
           })
       },
@@ -230,6 +236,9 @@
                 res.data.data.list[i].userTime = date.toLocaleString();
               }
               this.tableData = res.data.data.list;
+              this.pageNum = res.data.data.pageNum;
+              this.pageSize = res.data.data.pageSize;
+              this.total = res.data.data.total;
             }
           })
       },
