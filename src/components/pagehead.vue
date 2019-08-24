@@ -43,7 +43,6 @@ export default {
 
     init(){
       this.userId = this.$store.state.loginUserId;
-      this.userId = this.$store.state.loginUserId;
       this.$axios.get(url + "/user/findById", {
         params: {
           userId: this.userId
